@@ -5,6 +5,7 @@ const computerScorePara = document.querySelector('.computerScore');
 const roundText=document.querySelector('.round');
 roundText.textContent=`Round 1`;
 const resetBtn = document.querySelector('.resetBtn');
+const resultText=document.querySelector('.resultText');
 
 function getComputerChoice(){
     const randomNumber=Math.floor(Math.random()*3);
@@ -23,23 +24,26 @@ let rounds=0;
 
 function playRound(human, computer){
     if (human==computer){
-        resultDiv.textContent=`It's a tie! human=${human}=${computer} computer`;
-        humanScorePara.textContent = `Human: ${humanScore}`;
-        computerScorePara.textContent = `Computer: ${computerScore}`;
+        resultDiv.textContent="It's a tie!";
+        resultText.textContent=`🧑 ${human} = ${computer} 💻`
+        humanScorePara.textContent = `🧑: ${humanScore}`;
+        computerScorePara.textContent = `💻: ${computerScore}`;
     } else if (
         (human=="rock" && computer=="scissors") ||
         (human=="paper" && computer=="rock") ||
         (human=="scissors" && computer=="paper")
     ) {
         humanScore++;
-        resultDiv.textContent=`You win! human=${human} beats ${computer}=computer`;
-        humanScorePara.textContent = `Human: ${humanScore}`;
-        computerScorePara.textContent = `Computer: ${computerScore}`;
+        resultDiv.textContent="You win!";
+        resultText.textContent=`🧑 ${human} beats ${computer} 💻`;
+        humanScorePara.textContent = `🧑: ${humanScore}`;
+        computerScorePara.textContent = `💻: ${computerScore}`;
     } else {
         computerScore++;
-        resultDiv.textContent=`You lose! computer=${computer} beats ${human}=human`;
-        humanScorePara.textContent = `Human: ${humanScore}`;
-        computerScorePara.textContent = `Computer: ${computerScore}`;
+        resultDiv.textContent="You lose!";
+        resultText.textContent=`💻 ${computer} beats ${human} 🧑`;
+        humanScorePara.textContent = `🧑: ${humanScore}`;
+        computerScorePara.textContent = `💻: ${computerScore}`;
     }
 }
 
@@ -54,15 +58,16 @@ buttonsDiv.addEventListener('click', (e) => {
             roundText.textContent = `Round ${rounds + 1}`;
         }
         if (rounds === 5) {
+            resultText.style.display = 'none';
             if (humanScore > computerScore) {
                 resultDiv.textContent = `🏆 YOU WIN THE GAME! (${humanScore} - ${computerScore})`;
             } else if (computerScore > humanScore) {
-                resultDiv.textContent = `❌ YOU LOSE THE GAME! (${computerScore} - ${humanScore})`;
+                resultDiv.textContent = `❌ YOU LOSE THE GAME! (${humanScore} - ${computerScore})`;
             } else {
                 resultDiv.textContent = `🤝 IT'S A TIE GAME! (${humanScore} - ${computerScore})`;
             }
             
-            // Optional: Clear or hide the round counter since the game is over
+            
             roundText.textContent = "Game Over"; 
             resetBtn.style.display = 'block';
         }
@@ -73,11 +78,13 @@ buttonsDiv.addEventListener('click', (e) => {
 resetBtn.addEventListener('click', () => {
     humanScore = 0;
     computerScore = 0;
-    rounds = 0; // Fixed variable name here
+    rounds = 0;
 
-    humanScorePara.textContent = "Human: 0";
-    computerScorePara.textContent = "Computer: 0";
+    humanScorePara.textContent = "🧑: 0";
+    computerScorePara.textContent = "💻: 0";
     roundText.textContent = "Round 1";
     resultDiv.textContent = "";
+    resultText.style.display = 'block';
+    resultText.textContent="";
     resetBtn.style.display = 'none';
 });
